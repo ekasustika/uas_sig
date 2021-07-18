@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/Jamaah_lakilaki_1.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-7.33450880713,108.257633476],[-6.7234478503,109.396015159]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        L.control.locate().addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var overlay_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            opacity: 1.0
+        });
+        overlay_OSMStandard_0.addTo(map);
+        map.addLayer(overlay_OSMStandard_0);
+        function pop_Jamaah_lakilaki_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Kecamatan</th>\
+                        <td>' + (feature.properties['Kecamatan'] !== null ? Autolinker.link(String(feature.properties['Kecamatan'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">laki-laki</th>\
+                        <td>' + (feature.properties['laki-laki'] !== null ? Autolinker.link(String(feature.properties['laki-laki'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['perempuan'] !== null ? Autolinker.link(String(feature.properties['perempuan'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Jamaah_lakilaki_1_0(feature) {
+            if (feature.properties['laki-laki'] >= 11.000000 && feature.properties['laki-laki'] <= 25.000000 ) {
+                return {
+                pane: 'pane_Jamaah_lakilaki_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,252,245,1.0)',
+            }
+            }
+            if (feature.properties['laki-laki'] >= 25.000000 && feature.properties['laki-laki'] <= 50.000000 ) {
+                return {
+                pane: 'pane_Jamaah_lakilaki_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(178,224,171,1.0)',
+            }
+            }
+            if (feature.properties['laki-laki'] >= 50.000000 && feature.properties['laki-laki'] <= 75.000000 ) {
+                return {
+                pane: 'pane_Jamaah_lakilaki_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(61,167,90,1.0)',
+            }
+            }
+            if (feature.properties['laki-laki'] >= 75.000000 && feature.properties['laki-laki'] <= 92.000000 ) {
+                return {
+                pane: 'pane_Jamaah_lakilaki_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,68,27,1.0)',
+            }
+            }
+        }
+        map.createPane('pane_Jamaah_lakilaki_1');
+        map.getPane('pane_Jamaah_lakilaki_1').style.zIndex = 401;
+        map.getPane('pane_Jamaah_lakilaki_1').style['mix-blend-mode'] = 'normal';
+        var layer_Jamaah_lakilaki_1 = new L.geoJson(json_Jamaah_lakilaki_1, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_Jamaah_lakilaki_1',
+            onEachFeature: pop_Jamaah_lakilaki_1,
+            style: style_Jamaah_lakilaki_1_0,
+        });
+        bounds_group.addLayer(layer_Jamaah_lakilaki_1);
+        map.addLayer(layer_Jamaah_lakilaki_1);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Jamaah_laki-laki<br /><table><tr><td style="text-align: center;"><img src="legend/Jamaah_lakilaki_1_SEDIKIT0.png" /></td><td>SEDIKIT</td></tr><tr><td style="text-align: center;"><img src="legend/Jamaah_lakilaki_1_CUKUP1.png" /></td><td>CUKUP</td></tr><tr><td style="text-align: center;"><img src="legend/Jamaah_lakilaki_1_BANYAK2.png" /></td><td>BANYAK</td></tr><tr><td style="text-align: center;"><img src="legend/Jamaah_lakilaki_1_LEBIHBANYAK3.png" /></td><td>LEBIH BANYAK</td></tr></table>': layer_Jamaah_lakilaki_1,"OSM Standard": overlay_OSMStandard_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_Jamaah_lakilaki_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Kecamatan'] !== null?String('<div style="color: #000000; font-size: 8pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Kecamatan']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Jamaah_lakilaki_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        map.addControl(new L.Control.Search({
+            layer: layer_Jamaah_lakilaki_1,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'Kecamatan'}));
+        resetLabels([layer_Jamaahlakilaki_1]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Jamaahlakilaki_1]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Jamaahlakilaki_1]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Jamaahlakilaki_1]);
+        });
+        </script>
+    </body>
+</html>
